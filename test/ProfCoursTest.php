@@ -83,6 +83,10 @@ class ProfCoursTest extends TestCase
             new Prof("Nom_prof10", "Prenom_prof10", "10/10/1982", "lieu_prof10")    // idprof = 10      ** A MODIFIER **
         ];
 
+        // Insertion des instances de Prof dans la base de données
+        foreach (self::$prof_a as $prof) {
+            $prof->add(self::$conn);
+
         self::$cours_a = [
             new Cours("Cours1", "2", 1),       // idcours = 1
             new Cours("Cours2", "2.5", 3),     // idcours = 2
@@ -93,6 +97,9 @@ class ProfCoursTest extends TestCase
             new Cours("Cours7", "3", 5),       // idcours = 7   ** A SUPPRIMER **
             new Cours("Cours8", "4", 5),       // idcours = 8
             new Cours("Cours9", "3", 5),        // idcours = 9   ** A MODIFIER **
+            new Cours("loT", "10", 1),        // idcours = 11   
+            new Cours("IA", "12", 3),        // idcours = 12   
+            new Cours("EDL", "5", 6),        // idcours = 13   
             
             /**
             *
@@ -101,7 +108,8 @@ class ProfCoursTest extends TestCase
             */
 
         ];
-        
+        foreach (self::$cours_a as $cours) {
+            $cours->add(self::$conn);
     }
     
     
@@ -186,6 +194,12 @@ class ProfCoursTest extends TestCase
         * Question 8 : Dans la fonction « testAdd() », s’inspirer de test d’ajout des profs pour tester l’ajout des cours.   
         *
         */
+
+    // Récupération et vérification du nombre de cours ajoutés
+    $expectedCoursCount = count(self::$cours_a);
+    $actualCoursCount = Cours::count($conn); 
+    $this->assertEquals($expectedCoursCount, $actualCoursCount, "Enregistrement des cours ...\n");
+    $this->assertCount($actualCoursCount, self::$cours_a, "Enregistrement des cours ...\n");
         
     }
     
@@ -218,6 +232,13 @@ class ProfCoursTest extends TestCase
         * s’inspirer de test de la sélection et affichage des profs pour tester la sélection et l’affichage des cours.   
         *
         */
+        $record_cours_a = Cours::printAll($conn);
+        print "########## - LISTE DES COURS - AVANT TOUT ##########  \n";
+        foreach ($record_cours_a as $record_cours) {
+            print $record_cours;
+        }
+        print "################################################################\n\n";
+        $this->assertCount(count(self::$cours_a), $record_cours_a, "Nombre d'enregistrement égale pour Cours\n");
   
         
     }
