@@ -90,18 +90,17 @@ class ProfCoursTest extends TestCase
             new Cours("Cours4", "2", 3),       // idcours = 4
             new Cours("Cours5", "3", 3),       // idcours = 5
             new Cours("Cours6", "2", 4),       // idcours = 6
-            new Cours("Cours8", "3", 5),       // idcours = 7
-            new Cours("CoursTest", "4", 5),    // idcours = 8
-            new Cours("CoursTest2", "3", 5),   // idcours = 9
+            new Cours("Cours8", "4", 5),       // idcours = 7
+            new Cours("Cours9", "3", 5),        // idcours = 8   ** A MODIFIER **
             
             /**
             *
             * Question 7 : Insérer les enregistrements suivantes dans la table cours
             *
             */
-            new Cours("IoT", "10", 1),         // idcours = 10
-            new Cours("IA", "12", 3),          // idcours = 11
-            new Cours("EDL", "5", 6),          // idcours = 12
+            new Cours("IoT", "10", 1),         // idcours = 9
+            new Cours("IA", "12", 3),          // idcours = 10
+            new Cours("EDL", "5", 6),          // idcours = 11
 
         ];
 
