@@ -290,6 +290,15 @@ class ProfCoursTest extends TestCase
         * s’inspirer de test de sélection et affichage du premier prof pour tester la sélection et l’affichage du premier cours dans la base.
         *
         */
+
+        $cours = Cours::printOne($conn);
+        $cours_str = $cours->__toString();
+        print "########## - 1e COURS EN BASE - ########## \n";
+        print $cours_str."\n";
+        print "################################################################\n\n";
+        $expectedCours = self::$cours_a[0]->__toString();
+        $this->assertEquals($expectedCours, $cours_str, "Cours \n");
+        
         
            
 
@@ -348,6 +357,14 @@ class ProfCoursTest extends TestCase
         * s’inspirer de test de la modification du prof avec idProf= 10 pour tester la modification du cours dans ayant comme idCours = 9.
         *
         */
+        $cours = new Cours("Nouvel Intitulé", "Nouvelle Durée", 1); // Remplacez avec les nouvelles valeurs
+        $valCours = $cours->updateOne($conn, $idCours);
+        $expected_cours_str = $cours->__toString();
+        $record_cours = Cours::printOne($conn, $idCours);
+        $this->assertEquals($expected_cours_str, $record_cours->__toString(), "Update du cours $idCours ...\n");
+        $this->assertTrue($valCours, "Update du cours num $idCours ...\n");
+
+        
        
         
         
@@ -467,7 +484,15 @@ class ProfCoursTest extends TestCase
         * s’inspirer de test de la suppression du prof avec idProf= 8 pour tester la modification du cours dans ayant comme idCours = 7.
         *
         */
-        
+        // Cours
+        $valCours = Cours::deleteOne($conn);
+        $this->assertTrue($valCours, "Premier cours supprimé avec SUCCES\n");
+        $record_cours_a = Cours::printAll($conn);
+        print "@@@@@@@@@@@@@ - LISTE DES COURS APRES SUPPRESSION - Vérifier avec celui juste avant (1e supprimé) @@@@@@@@@@@@@ \n";
+        foreach ($record_cours_a as $record_cours) {
+           print $record_cours;
+        }   
+        print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
     }
 
 }
