@@ -74,28 +74,35 @@ class ProfCoursTest extends TestCase
             new Prof("Nom_prof1", "Prenom_prof1", "10/01/1982", "lieu_prof1"),      // idprof = 1
             new Prof("Nom_prof2", "Prenom_prof2", "10/02/1982", "lieu_prof2"),      // idprof = 2
             new Prof("Nom_prof3", "Prenom_prof3", "10/03/1982", "lieu_prof3"),      // idprof = 3
-            
+            new Prof("Nom_prof4", "Prenom_prof4", "10/04/1982", "lieu_prof4"),      // idprof = 4
+            new Prof("Nom_prof5", "Prenom_prof5", "10/05/1982", "lieu_prof5"),      // idprof = 5
+            new Prof("Nom_prof6", "Prenom_prof6", "10/06/1982", "lieu_prof6"),      // idprof = 6
+            new Prof("Nom_prof7", "Prenom_prof7", "10/07/1982", "lieu_prof7"),      // idprof = 7
+            new Prof("Nom_prof9", "Prenom_prof9", "10/09/1982", "lieu_prof9"),      // idprof = 8
+            new Prof("Nom_prof11", "Prenom_prof11", "10/11/1982", "lieu_prof11")    // idprof = 9
+            new Prof("Nom_prof12", "Prenom_prof12", "10/12/1982", "lieu_prof12")    // idprof = 10
         ];
 
-        // Insertion des instances de Prof dans la base de données
-        foreach (self::$prof_a as $prof) {
-            $prof->add(self::$conn);
-
         self::$cours_a = [
-            
-            new Cours("loT", "10", 1),        // idcours = 11   
-            new Cours("IA", "12", 3),        // idcours = 12   
-            new Cours("EDL", "5", 6),        // idcours = 13   
+            new Cours("Cours1", "2", 1),       // idcours = 1
+            new Cours("Cours2", "2.5", 3),     // idcours = 2
+            new Cours("Cours3", "3", 5),       // idcours = 3
+            new Cours("Cours4", "2", 3),       // idcours = 4
+            new Cours("Cours5", "3", 3),       // idcours = 5
+            new Cours("Cours6", "2", 4),       // idcours = 6
+            new Cours("Cours8", "4", 5),       // idcours = 7
+            new Cours("Cours9", "3", 5),        // idcours = 8   ** A MODIFIER **
             
             /**
             *
             * Question 7 : Insérer les enregistrements suivantes dans la table cours
             *
             */
+            new Cours("loT", "10", 1),        // idcours = 9   
+            new Cours("IA", "12", 3),        // idcours = 10   
+            new Cours("EDL", "5", 6),        // idcours = 11   
 
         ];
-        foreach (self::$cours_a as $cours) {
-            $cours->add(self::$conn);
     }
     
     
@@ -180,12 +187,10 @@ class ProfCoursTest extends TestCase
         * Question 8 : Dans la fonction « testAdd() », s’inspirer de test d’ajout des profs pour tester l’ajout des cours.   
         *
         */
-
-    // Récupération et vérification du nombre de cours ajoutés
-    $expectedCoursCount = count(self::$cours_a);
-    $actualCoursCount = Cours::count($conn); 
-    $this->assertEquals($expectedCoursCount, $actualCoursCount, "Enregistrement des cours ...\n");
-    $this->assertCount($actualCoursCount, self::$cours_a, "Enregistrement des cours ...\n");
+        $expectedCoursCount = count(self::$cours_a);
+        $actualCoursCount = Cours::count($conn); 
+        $this->assertEquals($expectedCoursCount, $actualCoursCount, "Enregistrement des cours ...\n");
+        $this->assertCount($actualCoursCount, self::$cours_a, "Enregistrement des cours ...\n");
         
     }
     
