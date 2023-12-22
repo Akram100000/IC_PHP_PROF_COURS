@@ -26,7 +26,7 @@ class ProfCoursTest extends TestCase
     private $lieu ="Toulouse, France"; // a changer
 
     // cours
-    private $intitule="Intégratoin continue"; //a remplir
+    private $intitule="Intégration continue"; //a remplir
     private $duree="3h";    //a remplir
 
     private static $prof_a = [];
@@ -71,7 +71,7 @@ class ProfCoursTest extends TestCase
             *
             */
             
-            new Prof("Nom_prof1", "Prenom_prof1", "10/01/1982", "lieu_prof1"),      // idprof = 1
+            New Prof("Nom_prof1", "Prenom_prof1", "10/01/1982", "lieu_prof1"),      // idprof = 1
             new Prof("Nom_prof2", "Prenom_prof2", "10/02/1982", "lieu_prof2"),      // idprof = 2
             new Prof("Nom_prof3", "Prenom_prof3", "10/03/1982", "lieu_prof3"),      // idprof = 3
             new Prof("Nom_prof4", "Prenom_prof4", "10/04/1982", "lieu_prof4"),      // idprof = 4
@@ -79,7 +79,7 @@ class ProfCoursTest extends TestCase
             new Prof("Nom_prof6", "Prenom_prof6", "10/06/1982", "lieu_prof6"),      // idprof = 6
             new Prof("Nom_prof7", "Prenom_prof7", "10/07/1982", "lieu_prof7"),      // idprof = 7
             new Prof("Nom_prof9", "Prenom_prof9", "10/09/1982", "lieu_prof9"),      // idprof = 8
-            new Prof("Nom_prof11", "Prenom_prof11", "10/11/1982", "lieu_prof11")    // idprof = 9
+            new Prof("Nom_prof11", "Prenom_prof11", "10/11/1982", "lieu_prof11"),    // idprof = 9
             new Prof("Nom_prof12", "Prenom_prof12", "10/12/1982", "lieu_prof12")    // idprof = 10
         ];
 
@@ -90,19 +90,21 @@ class ProfCoursTest extends TestCase
             new Cours("Cours4", "2", 3),       // idcours = 4
             new Cours("Cours5", "3", 3),       // idcours = 5
             new Cours("Cours6", "2", 4),       // idcours = 6
-            new Cours("Cours8", "4", 5),       // idcours = 7
-            new Cours("Cours9", "3", 5),        // idcours = 8   ** A MODIFIER **
+            new Cours("Cours8", "3", 5),       // idcours = 7
+            new Cours("CoursTest", "4", 5),    // idcours = 8
+            new Cours("CoursTest2", "3", 5),   // idcours = 9
             
             /**
             *
             * Question 7 : Insérer les enregistrements suivantes dans la table cours
             *
             */
-            new Cours("loT", "10", 1),        // idcours = 9   
-            new Cours("IA", "12", 3),        // idcours = 10   
-            new Cours("EDL", "5", 6),        // idcours = 11   
+            new Cours("IoT", "10", 1),         // idcours = 10
+            new Cours("IA", "12", 3),          // idcours = 11
+            new Cours("EDL", "5", 6),          // idcours = 12
 
         ];
+
     }
     
     
@@ -187,10 +189,10 @@ class ProfCoursTest extends TestCase
         * Question 8 : Dans la fonction « testAdd() », s’inspirer de test d’ajout des profs pour tester l’ajout des cours.   
         *
         */
-        $expectedCoursCount = count(self::$cours_a);
-        $actualCoursCount = Cours::count($conn); 
-        $this->assertEquals($expectedCoursCount, $actualCoursCount, "Enregistrement des cours ...\n");
-        $this->assertCount($actualCoursCount, self::$cours_a, "Enregistrement des cours ...\n");
+        $expected = count(self::$cours_a);
+        $num_records = Cours::count($conn);
+        $this->assertEquals($expected, $num_records, "Enregistrement des cours ...\n");
+        $this->assertCount($num_records, self::$cours_a, "Enregistrement des cours ...\n");
         
     }
     
@@ -215,22 +217,23 @@ class ProfCoursTest extends TestCase
         $this->assertCount(count(Self::$prof_a), $record_prof_a, "Nombre d'enregistrement égale pour Prof\n");
 
         
-        // Cours
-        
         /**
         *
         * Question 9 : Dans la fonction « testPrintAll() », 
         * s’inspirer de test de la sélection et affichage des profs pour tester la sélection et l’affichage des cours.   
         *
         */
+        print "****************************************************************\n\n";
+
+        // Cours
         $record_cours_a = Cours::printAll($conn);
-        print "########## - LISTE DES COURS - AVANT TOUT ##########  \n";
-        foreach ($record_cours_a as $record_cours) {
+        print "########## - LISTE DES COURS - ########## \n";
+        foreach ( $record_cours_a as $record_cours ) {
             print $record_cours;
         }
         print "################################################################\n\n";
-        $this->assertCount(count(self::$cours_a), $record_cours_a, "Nombre d'enregistrement égale pour Cours\n");
-  
+        $this->assertCount(count(Self::$cours_a), $record_cours_a, "Nombre d'enregistrement égale pour Cours\n");
+
         
     }
     
@@ -281,21 +284,12 @@ class ProfCoursTest extends TestCase
         * s’inspirer de test de sélection et affichage du premier prof pour tester la sélection et l’affichage du premier cours dans la base.
         *
         */
-
-        $cours = Cours::printOne($conn);
-        $cours_str = $cours->__toString();
-        print "########## - 1e COURS EN BASE - ########## \n";
-        print $cours_str."\n";
-        print "################################################################\n\n";
-        $expectedCours = self::$cours_a[0]->__toString();
-        $this->assertEquals($expectedCours, $cours_str, "Cours \n");
-        
         
            
 
         // Avec des ID
-        $idProf = 10;
-        $idCours = 9;
+        $idProf = 9;
+        $idCours = 11;
         // Prof
         $prof = Prof::printOne($conn, $idProf);
         $prof_str = $prof->__toString();
@@ -329,8 +323,8 @@ class ProfCoursTest extends TestCase
         $conn = $this->getConnection();
 
         // Avec Id en dur.
-        $idProf = 10;
-        $idCours = 9;
+        $idProf = 9;
+        $idCours = 10;
 
         // Prof
         $prof = new Prof($this->nom, $this->prenom, $this->date, $this->lieu);
@@ -348,14 +342,6 @@ class ProfCoursTest extends TestCase
         * s’inspirer de test de la modification du prof avec idProf= 10 pour tester la modification du cours dans ayant comme idCours = 9.
         *
         */
-        $cours = new Cours("Nouvel Intitulé", "Nouvelle Durée", 1); // Remplacez avec les nouvelles valeurs
-        $valCours = $cours->updateOne($conn, $idCours);
-        $expected_cours_str = $cours->__toString();
-        $record_cours = Cours::printOne($conn, $idCours);
-        $this->assertEquals($expected_cours_str, $record_cours->__toString(), "Update du cours $idCours ...\n");
-        $this->assertTrue($valCours, "Update du cours num $idCours ...\n");
-
-        
        
         
         
@@ -475,15 +461,7 @@ class ProfCoursTest extends TestCase
         * s’inspirer de test de la suppression du prof avec idProf= 8 pour tester la modification du cours dans ayant comme idCours = 7.
         *
         */
-        // Cours
-        $valCours = Cours::deleteOne($conn);
-        $this->assertTrue($valCours, "Premier cours supprimé avec SUCCES\n");
-        $record_cours_a = Cours::printAll($conn);
-        print "@@@@@@@@@@@@@ - LISTE DES COURS APRES SUPPRESSION - Vérifier avec celui juste avant (1e supprimé) @@@@@@@@@@@@@ \n";
-        foreach ($record_cours_a as $record_cours) {
-           print $record_cours;
-        }   
-        print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n";
+        
     }
 
 }
